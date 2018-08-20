@@ -52,7 +52,11 @@ class ChatServer(threading.Thread):
                 reply = 'Your name is now: {}'.format(nick).encode()
                 conn.sendall(reply)
 
-            # elif data[0][0:2] == '@dm':
+            elif data[0][0:2] == '@dm':
+                message_data = data[0].split(' ') # [1] is user to send too, [2] is message to send to that user
+                for client in self.client_pool:
+                    if message_data[1] == client.nick:
+                        client.conn.sendall(message_data[2].encode())
 
             else:
                 conn.sendall(b'Invalid command. Please try again.\n')
