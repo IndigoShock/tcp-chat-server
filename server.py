@@ -34,16 +34,33 @@ class ChatServer(threading.Thread):
             if data[0] == '@quit':
                 conn.sendall(b'You have left the chat.')
                 reply = nick.encode() + b'has left the channel.\n'
-                [c.conn.sendall(reply) for c in self.client_pool if len(self.client_pool)]
+                [c.conn.sendall(reply) for c in self.client_pool if
+                    len(self.client_pool)]
                 self.client_pool = [c for c in self.client_pool if c.id != id]
                 conn.close()
+
+            elif data[0] == '@list':
+                reply = b'This is a list of everyone in the channel.\n'
+                for client in self.client_pool:
+                    reply += '{}\n'.format(client.nick).encode()
+                [c.conn.sendall(reply) for c in self.client_pool if
+                    len(self.client_pool)]
+
+            elif data[0][0:8] == '@nickname':
+                new_name = data[0].split(' ')[1]
+                nick = new_name
+                reply = 'Your name is now: {}'.format(nick).encode()
+                conn.sendall(reply)
+
+            # elif data[0][0:2] == '@dm':
 
             else:
                 conn.sendall(b'Invalid command. Please try again.\n')
 
         else:
             reply = nick.encode() + b': ' + message
-            [c.conn.sendall(reply) for c in self.client_pool if len(self.client_pool)]
+            [c.conn.sendall(reply) for c in self.client_pool if
+                len(self.client_pool)]
 
     def run_thread(self, id, nick, conn, addr):
         print('{} connected with {}:{}'.format(nick, addr[0], str(addr[1])))
