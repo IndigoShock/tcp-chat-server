@@ -4,7 +4,7 @@ import socket
 import sys
 
 
-PORT = 9996
+PORT = 9996 or 7364 or 1344 or 1842 or 4302 or 3857
 
 
 class ChatServer(threading.Thread):
@@ -42,8 +42,8 @@ class ChatServer(threading.Thread):
                 reply = b'This is a list of everyone in the channel.\n'
                 for client in self.client_pool:
                     reply += '{}\n'.format(client.nick).encode()
-                [c.conn.sendall(reply) for c in self.client_pool if
-                    len(self.client_pool)]
+                client.conn.sendall(reply)
+
             elif data[0] == '@nickname':
                 new_name = data[1]
                 client.nick = new_name
