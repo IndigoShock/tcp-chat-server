@@ -1,10 +1,11 @@
 from client import ChatClient
+import random
 import threading
 import socket
 import sys
 
 
-PORT = 9996 or 7364 or 1344 or 1842 or 4302 or 3857
+PORT = random.randrange(5000,9999)
 
 
 class ChatServer(threading.Thread):
@@ -95,3 +96,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         [c.conn.close() for c in server.client_pool if len(server.client_pool)]
         server.exit()
+
