@@ -1,22 +1,24 @@
-# Project Name
+# IRC Replacement
 
-**Author**: Your Name(s) Goes Here
-**Version**: 1.0.0 (increment the patch/fix version number up if you make more commits past your first submission)
+**Author**: Steph Harper, Alex Stone
+**Version**: 1.0.0
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for a Code Fellows 401 class. (i.e. What's your problem domain?) -->
+Allow us on the same network to talk to each other using the built in bash(or otherwise) console.
 
 ## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
+Install python 3.6+, then run python3 server.py while in the same directory as the server.py file. This will start the server on the port it says. To connect to the server type nc localhost PORT_NUMBER into the console.
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. This is also an area which you can include any visuals; flow charts, example usage gifs, screen captures, etc.-->
+This is a TCP server using Python 3.6+ technology, AND NOTHING ELSE!
 
 ## API
-<!-- Provide detailed instructions for your applications usage. This should include any methods or endpoints available to the user/client/developer. Each section should be formatted to provide clear syntax for usage, example calls including input data requirements and options, and example responses or return values. -->
+@dm <username> <message> | This sends <message> to <username>
+@nick <name> | Change your name for this session to <name>
+@list | Lists every active user in the session to all other active users
+@quit | Quits you out of the session
+All other input will be interpreted as a message to the whole server
+
 
 ## Change Log
-<!-- Use this are to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an example:
-
-01-01-2001 4:59pm - Added functionality to add and delete some things.
--->
+20-08-2018 5:22 PM : Initial Version 1.0 pushed to merge with master.
