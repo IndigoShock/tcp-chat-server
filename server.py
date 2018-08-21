@@ -1,10 +1,11 @@
 from client import ChatClient
+import random
 import threading
 import socket
 import sys
 
 
-PORT = 9996
+PORT = random.randrange(5000,9999)
 
 
 class ChatServer(threading.Thread):
@@ -42,8 +43,8 @@ class ChatServer(threading.Thread):
                 reply = b'This is a list of everyone in the channel.\n'
                 for client in self.client_pool:
                     reply += '{}\n'.format(client.nick).encode()
-                [c.conn.sendall(reply) for c in self.client_pool if
-                    len(self.client_pool)]
+                client.conn.sendall(reply)
+
             elif data[0] == '@nickname':
                 new_name = data[1]
                 client.nick = new_name
@@ -95,3 +96,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         [c.conn.close() for c in server.client_pool if len(server.client_pool)]
         server.exit()
+
